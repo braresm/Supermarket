@@ -1,0 +1,43 @@
+{
+  "categories": [
+    {
+      "name": "Fresh Products",
+      "tasks": [
+        {
+          "task": "Task 1",
+          "description": "Name of the fresh product and location"
+        },
+        {
+          "task": "Task 2",
+          "description": "Name of another fresh product and location"
+        }
+      ]
+    },
+    {
+      "name": "Dry Products",
+      "tasks": [
+        {
+          "task": "Task 1",
+          "description": "Name of the dry product and location"
+        },
+        {
+          "task": "Task 2",
+          "description": "Name of another dry product and location"
+        }
+      ]
+    },
+    {
+      "name": "Drinks",
+      "tasks": [
+        {
+          "task": "Task 1",
+          "description": "Name of the drink and location"
+        },
+        {
+          "task": "Task 2",
+          "description": "Name of another drink and location"
+        }
+      ]
+    }
+  ]
+}
