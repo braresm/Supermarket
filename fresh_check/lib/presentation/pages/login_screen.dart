@@ -11,34 +11,35 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: const Text('Authentication')),
-        body: BlocListener<AuthBloc, AuthState>(
-          listener: (context, state) {
-            if (state is AuthSuccess) {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => HomeScreen()),
+      appBar: AppBar(title: const Text('Authentication')),
+      body: BlocListener<AuthBloc, AuthState>(
+        listener: (context, state) {
+          if (state is AuthSuccess) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => HomeScreen()),
+            );
+          } else if (state is AuthFailure) {
+            ScaffoldMessenger.of(context)
+                .showSnackBar(SnackBar(content: Text(state.error)));
+          }
+        },
+        child: BlocBuilder<AuthBloc, AuthState>(
+          builder: (context, state) {
+            if (state is AuthLoading) {
+              // Showing the loading indicator while the user is signing in
+              return const Center(
+                child: CircularProgressIndicator(),
               );
-            } else if (state is AuthFailure) {
-              ScaffoldMessenger.of(context)
-                  .showSnackBar(SnackBar(content: Text(state.error)));
             }
+            if (state is AuthInitial || state is AuthFailure) {
+              return LoginForm(isLogin: isLogin);
+            }
+            return Container();
           },
-          child: BlocBuilder<AuthBloc, AuthState>(
-            builder: (context, state) {
-              if (state is AuthLoading) {
-                // Showing the loading indicator while the user is signing in
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
-              if (state is AuthInitial) {
-                return LoginForm(isLogin: isLogin);
-              }
-              return Container();
-            },
-          ),
-        ));
+        ),
+      ),
+    );
   }
 }
 

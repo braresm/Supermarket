@@ -19,12 +19,15 @@ class BarcodeScannedScreen extends StatelessWidget {
             padding: EdgeInsets.all(padding),
             child: Column(
               children: [
-                SizedBox(height: screenSize.height * 0.15), // Space for the back button
+                SizedBox(
+                    height:
+                        screenSize.height * 0.15), // Space for the back button
                 Container(
                   padding: EdgeInsets.all(padding),
                   decoration: BoxDecoration(
                     color: Colors.white,
-                    borderRadius: BorderRadius.circular(screenSize.width * 0.05),
+                    borderRadius:
+                        BorderRadius.circular(screenSize.width * 0.05),
                   ),
                   child: Center(
                     child: Text(
@@ -45,7 +48,8 @@ class BarcodeScannedScreen extends StatelessWidget {
                   ),
                   decoration: BoxDecoration(
                     color: Color(0xFF6F8F72),
-                    borderRadius: BorderRadius.circular(screenSize.width * 0.05),
+                    borderRadius:
+                        BorderRadius.circular(screenSize.width * 0.05),
                   ),
                   child: TextField(
                     decoration: InputDecoration(
@@ -63,7 +67,8 @@ class BarcodeScannedScreen extends StatelessWidget {
                   padding: EdgeInsets.all(padding),
                   decoration: BoxDecoration(
                     color: Color(0xFF5F705F),
-                    borderRadius: BorderRadius.circular(screenSize.width * 0.05),
+                    borderRadius:
+                        BorderRadius.circular(screenSize.width * 0.05),
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -90,7 +95,8 @@ class BarcodeScannedScreen extends StatelessWidget {
                   height: screenSize.height * 0.3,
                   decoration: BoxDecoration(
                     color: Color(0xFFD3D3D3),
-                    borderRadius: BorderRadius.circular(screenSize.width * 0.05),
+                    borderRadius:
+                        BorderRadius.circular(screenSize.width * 0.05),
                   ),
                 ),
               ],
@@ -100,7 +106,8 @@ class BarcodeScannedScreen extends StatelessWidget {
             top: screenSize.height * 0.05,
             left: padding,
             child: IconButton(
-              icon: Icon(Icons.arrow_back, color: Colors.white, size: screenSize.width * 0.08),
+              icon: Icon(Icons.arrow_back,
+                  color: Colors.white, size: screenSize.width * 0.08),
               onPressed: () {
                 Navigator.pop(context);
               },
@@ -113,5 +120,5 @@ class BarcodeScannedScreen extends StatelessWidget {
 }
 
 void main() => runApp(MaterialApp(
-  home: BarcodeScannerScreen(),
-));
+      home: BarcodeScannerScreen(),
+    ));

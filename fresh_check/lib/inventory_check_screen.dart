@@ -3,7 +3,7 @@ import 'custom_scaffold.dart';
 import 'counting_screen.dart';
 import 'fresh_check_screen.dart';
 import 'reordering_screen.dart';
-import 'add_new_item_screen.dart';
+import 'presentation/pages/add_new_item_screen.dart';
 
 class InventoryCheckScreen extends StatelessWidget {
   @override
@@ -100,7 +100,8 @@ class InventoryButton extends StatelessWidget {
                 imagePath,
                 width: imageSize,
                 height: imageSize,
-                fit: BoxFit.contain, // Adjust the image to contain within the bounds
+                fit: BoxFit
+                    .contain, // Adjust the image to contain within the bounds
               ),
               SizedBox(width: 10),
               Text(
