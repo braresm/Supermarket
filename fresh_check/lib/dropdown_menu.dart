@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:fresh_check/presentation/bloc/auth_bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'home_screen.dart';
 import 'barcode_scanning.dart';
 import 'inventory_check_screen.dart';
@@ -7,14 +10,15 @@ import 'orders_screen.dart';
 class CustomDropdownMenu extends StatelessWidget {
   final String employeeName;
 
-  const CustomDropdownMenu({Key? key, required this.employeeName}) : super(key: key);
+  const CustomDropdownMenu({super.key, required this.employeeName});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(16.0),
+      padding: const EdgeInsets.all(16.0),
       decoration: BoxDecoration(
-        color: Color(0xFF6F8F72), // Adjust this color to match your design
+        color:
+            const Color(0xFF6F8F72), // Adjust this color to match your design
         borderRadius: BorderRadius.circular(10.0),
       ),
       child: Column(
@@ -22,35 +26,41 @@ class CustomDropdownMenu extends StatelessWidget {
         children: [
           Text(
             employeeName,
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.white,
               fontSize: 18,
             ),
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           _buildMenuItem(context, Icons.home, 'Home', HomeScreen()),
-          _buildMenuItem(context, Icons.qr_code, 'Barcode scanner', BarcodeScannerScreen()),
-          _buildMenuItem(context, Icons.inventory, 'Inventory check', InventoryCheckScreen()),
-          _buildMenuItem(context, Icons.shopping_cart, 'Orders', OrdersScreen()),
-          SizedBox(height: 20),
+          _buildMenuItem(context, Icons.qr_code, 'Barcode scanner',
+              BarcodeScannerScreen()),
+          _buildMenuItem(context, Icons.inventory, 'Inventory check',
+              InventoryCheckScreen()),
+          _buildMenuItem(
+              context, Icons.shopping_cart, 'Orders', OrdersScreen()),
+          const SizedBox(height: 20),
           ElevatedButton(
             onPressed: () {
-              // Add your logout logic here
+              BlocProvider.of<AuthBloc>(context).add(LogoutEvent());
+              Navigator.of(context).popUntil((route) => route.isFirst);
             },
-            child: Text('Log out'),
             style: ElevatedButton.styleFrom(
-              foregroundColor: Colors.black, backgroundColor: Colors.white,
+              foregroundColor: Colors.black,
+              backgroundColor: Colors.white,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(18.0),
               ),
             ),
+            child: const Text('Log out'),
           ),
         ],
       ),
     );
   }
 
-  Widget _buildMenuItem(BuildContext context, IconData icon, String title, Widget destination) {
+  Widget _buildMenuItem(
+      BuildContext context, IconData icon, String title, Widget destination) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10.0),
       child: InkWell(
@@ -63,10 +73,10 @@ class CustomDropdownMenu extends StatelessWidget {
         child: Row(
           children: [
             Icon(icon, color: Colors.white),
-            SizedBox(width: 10),
+            const SizedBox(width: 10),
             Text(
               title,
-              style: TextStyle(color: Colors.white),
+              style: const TextStyle(color: Colors.white),
             ),
           ],
         ),

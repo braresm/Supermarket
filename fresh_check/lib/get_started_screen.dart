@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'login_screen.dart';
+import 'package:fresh_check/presentation/pages/auth_screen.dart';
 
 class GetStartedScreen extends StatelessWidget {
+  const GetStartedScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -12,7 +14,7 @@ class GetStartedScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Expanded(
+              const Expanded(
                 child: Center(
                   child: Text.rich(
                     TextSpan(
@@ -41,31 +43,32 @@ class GetStartedScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => LoginScreen()),
+                    MaterialPageRoute(builder: (context) => const AuthScreen()),
                   );
                 },
-                child: Text(
-                  'Get Started',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18,
-                  ),
-                ),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFF6F8F72),
                   foregroundColor: Colors.white,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20),
                   ),
-                  padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+                ),
+                child: const Text(
+                  'Get Started',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18,
+                  ),
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
             ],
           ),
         ),
