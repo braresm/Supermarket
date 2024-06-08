@@ -3,7 +3,7 @@ class Product {
   final String name;
   final String categoty;
   final String location;
-  final String barcode;
+  final int barcode;
   final double price;
   final DateTime? createdAt;
 

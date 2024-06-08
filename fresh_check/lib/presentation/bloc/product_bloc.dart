@@ -13,19 +13,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
       {required this.getProductByBarcodeUseCase,
       required this.addProductUseCase})
       : super(ProductInitial()) {
-    on<GetProductByBarcode>(_onGetProductByBarcode);
     on<AddProduct>(_onAddProduct);
-  }
-
-  Future<void> _onGetProductByBarcode(
-      GetProductByBarcode event, Emitter<ProductState> emit) async {
-    emit(ProductLoading());
-    try {
-      final product = await getProductByBarcodeUseCase(event.barcode);
-      emit(ProductLoaded(product));
-    } catch (e) {
-      emit(ProductError(e.toString()));
-    }
   }
 
   Future<void> _onAddProduct(
@@ -46,12 +34,6 @@ class ProductEvent extends Equatable {
 
   @override
   List<Object> get props => [];
-}
-
-class GetProductByBarcode extends ProductEvent {
-  final String barcode;
-
-  const GetProductByBarcode(this.barcode);
 }
 
 class AddProduct extends ProductEvent {

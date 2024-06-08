@@ -1,16 +1,23 @@
 import 'package:flutter/material.dart';
-import 'custom_scaffold.dart';
-import 'counting_screen.dart';
-import 'fresh_check_screen.dart';
-import 'reordering_screen.dart';
-import 'presentation/pages/add_new_item_screen.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fresh_check/custom_scaffold.dart';
+import 'package:fresh_check/data/repositories/product_repository_impl.dart';
+import 'package:fresh_check/domain/usecases/get_product_inventory_by_barcode_usecase.dart';
+import 'package:fresh_check/fresh_check_screen.dart';
+
+import 'package:fresh_check/presentation/bloc/product_inventory/product_inventory_bloc.dart';
+import 'package:fresh_check/presentation/pages/add_new_item_screen.dart';
+import 'package:fresh_check/presentation/pages/counting_screen.dart';
+import 'package:fresh_check/reordering_screen.dart';
 
 class InventoryCheckScreen extends StatelessWidget {
+  const InventoryCheckScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
       employeeName: 'Employee Name',
-      customColor: Color(0xFF6F8F72),
+      customColor: const Color(0xFF6F8F72),
       title: 'Inventory',
       body: Center(
         child: Column(
@@ -22,7 +29,17 @@ class InventoryCheckScreen extends StatelessWidget {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => CountingScreen()),
+                  MaterialPageRoute(
+                    builder: (context) => BlocProvider(
+                      create: (context) => ProductInventoryBloc(
+                        getProductInventoryByBarcodeUseCase:
+                            GetProductInventoryByBarcodeUseCase(
+                          ProductRepositoryImpl(),
+                        ),
+                      ),
+                      child: CountingScreen(),
+                    ),
+                  ),
                 );
               },
             ),
@@ -68,7 +85,8 @@ class InventoryButton extends StatelessWidget {
   final String label;
   final VoidCallback onPressed;
 
-  InventoryButton({
+  const InventoryButton({
+    super.key,
     required this.imagePath,
     required this.label,
     required this.onPressed,
@@ -86,8 +104,8 @@ class InventoryButton extends StatelessWidget {
         width: buttonWidth,
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
-            backgroundColor: Color(0xFF6F8F72),
-            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+            backgroundColor: const Color(0xFF6F8F72),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(15),
             ),
@@ -103,10 +121,10 @@ class InventoryButton extends StatelessWidget {
                 fit: BoxFit
                     .contain, // Adjust the image to contain within the bounds
               ),
-              SizedBox(width: 10),
+              const SizedBox(width: 10),
               Text(
                 label,
-                style: TextStyle(fontSize: 18, color: Colors.white),
+                style: const TextStyle(fontSize: 18, color: Colors.white),
               ),
             ],
           ),

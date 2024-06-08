@@ -29,7 +29,7 @@ class AuthScreen extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => LoginScreen(
+                      builder: (context) => const LoginScreen(
                         isLogin: true,
                       ),
                     ),
@@ -55,7 +55,7 @@ class AuthScreen extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => LoginScreen(
+                      builder: (context) => const LoginScreen(
                         isLogin: false,
                       ),
                     ),

@@ -194,7 +194,8 @@ class AddNewItemScreen extends StatelessWidget {
                               id: 0,
                               name: _nameController.text,
                               location: _locationController.text,
-                              barcode: _barcodeController.text,
+                              barcode:
+                                  int.tryParse(_barcodeController.text) ?? 0,
                               categoty: 'test',
                               price:
                                   double.tryParse(_currencyController.text) ??

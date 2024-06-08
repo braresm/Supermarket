@@ -6,7 +6,7 @@ class GetProductByBarcodeUseCase {
 
   GetProductByBarcodeUseCase(this.repository);
 
-  Future<Product?> call(String barcode) {
+  Future<Product?> call(int barcode) {
     return repository.getProductByBarcode(barcode);
   }
 }

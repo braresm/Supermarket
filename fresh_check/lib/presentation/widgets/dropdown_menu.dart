@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:fresh_check/presentation/bloc/auth_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'home_screen.dart';
-import 'barcode_scanning.dart';
-import 'inventory_check_screen.dart';
-import 'orders_screen.dart';
+import '../../home_screen.dart';
+import '../../barcode_scanning.dart';
+import '../pages/inventory_check_screen.dart';
+import '../../orders_screen.dart';
 
 class CustomDropdownMenu extends StatelessWidget {
   final String employeeName;
@@ -32,13 +32,30 @@ class CustomDropdownMenu extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 20),
-          _buildMenuItem(context, Icons.home, 'Home', HomeScreen()),
-          _buildMenuItem(context, Icons.qr_code, 'Barcode scanner',
-              BarcodeScannerScreen()),
-          _buildMenuItem(context, Icons.inventory, 'Inventory check',
-              InventoryCheckScreen()),
           _buildMenuItem(
-              context, Icons.shopping_cart, 'Orders', OrdersScreen()),
+            context,
+            Icons.home,
+            'Home',
+            HomeScreen(),
+          ),
+          _buildMenuItem(
+            context,
+            Icons.qr_code,
+            'Barcode scanner',
+            BarcodeScannerScreen(),
+          ),
+          _buildMenuItem(
+            context,
+            Icons.inventory,
+            'Inventory check',
+            const InventoryCheckScreen(),
+          ),
+          _buildMenuItem(
+            context,
+            Icons.shopping_cart,
+            'Orders',
+            OrdersScreen(),
+          ),
           const SizedBox(height: 20),
           ElevatedButton(
             onPressed: () {

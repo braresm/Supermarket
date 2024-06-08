@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'dropdown_menu.dart';
+import 'presentation/widgets/dropdown_menu.dart';
 
 class CustomScaffold extends StatefulWidget {
   final String employeeName;
@@ -15,7 +15,6 @@ class CustomScaffold extends StatefulWidget {
     required this.customColor,
     required this.title,
     this.showBackArrow = true,
-
   }) : super(key: key);
 
   @override
@@ -41,7 +40,6 @@ class _CustomScaffoldState extends State<CustomScaffold> {
           IconButton(
             icon: Icon(Icons.menu),
             onPressed: _toggleMenu,
-
           ),
         ],
       ),

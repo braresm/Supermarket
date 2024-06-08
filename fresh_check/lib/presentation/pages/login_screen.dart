@@ -57,92 +57,93 @@ class _LoginFormState extends State<LoginForm> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
-  String? _validateEmail(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'Please enter your email';
-    }
-    final emailRegExp = RegExp(r'^[^@]+@[^@]+\.[^@]+');
-    if (!emailRegExp.hasMatch(value)) {
-      return 'Please enter a valid email';
-    }
-    return null;
-  }
-
-  String? _validatePassword(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'Please enter your password';
-    }
-    if (value.length < 6) {
-      return 'Password must be at least 6 characters long';
-    }
-    return null;
-  }
-
-  void _submit() {
-    if (_formKey.currentState!.validate()) {
-      if (widget.isLogin) {
-        context.read<AuthBloc>().add(
-              SignInEvent(_emailController.text, _passwordController.text),
-            );
-      } else {
-        context.read<AuthBloc>().add(
-              SignUpEvent(_emailController.text, _passwordController.text),
-            );
-      }
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
-    return BlocListener<AuthBloc, AuthState>(
-      listener: (context, state) {},
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            children: [
-              TextFormField(
-                controller: _emailController,
-                decoration: const InputDecoration(labelText: 'Email'),
-                validator: _validateEmail,
-              ),
-              TextFormField(
-                controller: _passwordController,
-                decoration: const InputDecoration(labelText: 'Password'),
-                obscureText: true,
-                validator: _validatePassword,
-              ),
-              const SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: _submit,
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF6F8F72),
-                  foregroundColor: Colors.white,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Form(
+        key: _formKey,
+        child: Column(
+          children: [
+            TextFormField(
+              controller: _emailController,
+              decoration: const InputDecoration(labelText: 'Email'),
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter your email';
+                }
+                final emailRegExp = RegExp(r'^[^@]+@[^@]+\.[^@]+');
+                if (!emailRegExp.hasMatch(value)) {
+                  return 'Please enter a valid email';
+                }
+                return null;
+              },
+            ),
+            TextFormField(
+              controller: _passwordController,
+              decoration: const InputDecoration(labelText: 'Password'),
+              obscureText: true,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter your password';
+                }
+                if (value.length < 6) {
+                  return 'Password must be at least 6 characters long';
+                }
+                return null;
+              },
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () => {
+                if (_formKey.currentState!.validate())
+                  {
+                    if (widget.isLogin)
+                      {
+                        context.read<AuthBloc>().add(
+                              SignInEvent(
+                                _emailController.text,
+                                _passwordController.text,
+                              ),
+                            )
+                      }
+                    else
+                      {
+                        context.read<AuthBloc>().add(
+                              SignUpEvent(
+                                _emailController.text,
+                                _passwordController.text,
+                              ),
+                            )
+                      }
+                  }
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xFF6F8F72),
+                foregroundColor: Colors.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
                 ),
-                child: Text(widget.isLogin ? 'Log In' : 'Sign Up'),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
               ),
-              TextButton(
-                onPressed: () {
-                  setState(() {
-                    widget.isLogin = !widget.isLogin;
-                  });
-                },
-                child: Text(
-                  widget.isLogin ? 'Switch to Sign Up' : 'Switch to Log In',
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Color(0xFF77AD78),
-                  ),
+              child: Text(widget.isLogin ? 'Log In' : 'Sign Up'),
+            ),
+            TextButton(
+              onPressed: () {
+                setState(() {
+                  widget.isLogin = !widget.isLogin;
+                });
+              },
+              child: Text(
+                widget.isLogin ? 'Switch to Sign Up' : 'Switch to Log In',
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xFF77AD78),
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
