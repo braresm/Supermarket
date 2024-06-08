@@ -1,12 +1,12 @@
 import 'package:fresh_check/data/repositories/auth_repository.dart';
-import 'package:supabase/supabase.dart';
+import 'package:fresh_check/domain/models/account.dart';
 
 class SignInUseCase {
   final AuthRepository repository;
 
   SignInUseCase(this.repository);
 
-  Future<User?> call(String email, String password) {
+  Future<Account?> call(String email, String password) {
     return repository.signIn(email, password);
   }
 }
@@ -16,7 +16,7 @@ class SignUpUseCase {
 
   SignUpUseCase(this.repository);
 
-  Future<User?> call(String email, String password) {
+  Future<Account?> call(String email, String password) {
     return repository.signUp(email, password);
   }
 }

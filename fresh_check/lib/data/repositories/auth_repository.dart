@@ -1,19 +1,15 @@
-import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:fresh_check/domain/models/account.dart';
 
 class AuthRepository {
-  Future<User?> signIn(String email, String password) async {
-    final response = await Supabase.instance.client.auth
-        .signInWithPassword(email: email, password: password);
-    return response.user;
+  Future<Account?> signIn(String email, String password) async {
+    throw UnimplementedError();
   }
 
-  Future<User?> signUp(String email, String password) async {
-    final response = await Supabase.instance.client.auth
-        .signUp(email: email, password: password);
-    return response.user;
+  Future<Account?> signUp(String email, String password) async {
+    throw UnimplementedError();
   }
 
   Future<void> signOut() async {
-    await Supabase.instance.client.auth.signOut();
+    throw UnimplementedError();
   }
 }

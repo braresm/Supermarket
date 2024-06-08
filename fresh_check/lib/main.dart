@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:fresh_check/data/repositories/auth_repository.dart';
+import 'package:fresh_check/data/repositories/auth_repository_impl.dart';
 import 'package:fresh_check/data/repositories/product_repository_impl.dart';
 import 'package:fresh_check/domain/usecases/add_product_usecase.dart';
 import 'package:fresh_check/domain/usecases/auth_usecase.dart';
 import 'package:fresh_check/domain/usecases/get_product_by_barcode_usecase.dart';
-import 'package:fresh_check/presentation/bloc/auth_bloc.dart';
+import 'package:fresh_check/presentation/bloc/auth/auth_bloc.dart';
 import 'package:fresh_check/presentation/bloc/product_bloc.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'welcome_screen.dart';
@@ -35,9 +35,9 @@ class FreshCheckApp extends StatelessWidget {
       providers: [
         BlocProvider<AuthBloc>(
           create: (BuildContext context) => AuthBloc(
-            signInUseCase: SignInUseCase(AuthRepository()),
-            signUpUseCase: SignUpUseCase(AuthRepository()),
-            logoutUseCase: LogoutUseCase(AuthRepository()),
+            signInUseCase: SignInUseCase(AuthRepositoryImpl()),
+            signUpUseCase: SignUpUseCase(AuthRepositoryImpl()),
+            logoutUseCase: LogoutUseCase(AuthRepositoryImpl()),
           ),
         ),
         BlocProvider<ProductBloc>(

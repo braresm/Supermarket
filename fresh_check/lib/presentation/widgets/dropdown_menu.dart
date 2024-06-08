@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:fresh_check/presentation/bloc/auth_bloc.dart';
+import 'package:fresh_check/presentation/bloc/auth/auth_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fresh_check/presentation/bloc/auth/auth_event.dart';
 
 import '../../home_screen.dart';
 import '../../barcode_scanning.dart';

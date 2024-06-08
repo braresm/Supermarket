@@ -1,42 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fresh_check/domain/usecases/auth_usecase.dart';
-import 'package:supabase/supabase.dart';
-
-abstract class AuthEvent {}
-
-class SignInEvent extends AuthEvent {
-  final String email;
-  final String password;
-
-  SignInEvent(this.email, this.password);
-}
-
-class SignUpEvent extends AuthEvent {
-  final String email;
-  final String password;
-
-  SignUpEvent(this.email, this.password);
-}
-
-class LogoutEvent extends AuthEvent {}
-
-abstract class AuthState {}
-
-class AuthInitial extends AuthState {}
-
-class AuthLoading extends AuthState {}
-
-class AuthSuccess extends AuthState {
-  final User user;
-
-  AuthSuccess(this.user);
-}
-
-class AuthFailure extends AuthState {
-  final String error;
-
-  AuthFailure(this.error);
-}
+import 'package:fresh_check/presentation/bloc/auth/auth_event.dart';
+import 'package:fresh_check/presentation/bloc/auth/auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final SignInUseCase signInUseCase;
@@ -56,8 +21,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   Future<void> _onSignIn(SignInEvent event, Emitter<AuthState> emit) async {
     emit(AuthLoading());
     try {
-      final user = await signInUseCase(event.email, event.password);
-      emit(AuthSuccess(user!));
+      final account = await signInUseCase(event.email, event.password);
+      emit(AuthSuccess(account!));
     } catch (e) {
       emit(AuthFailure(e.toString()));
     }
@@ -66,8 +31,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   Future<void> _onSignUp(SignUpEvent event, Emitter<AuthState> emit) async {
     emit(AuthLoading());
     try {
-      final user = await signUpUseCase(event.email, event.password);
-      emit(AuthSuccess(user!));
+      final account = await signUpUseCase(event.email, event.password);
+      emit(AuthSuccess(account!));
     } catch (e) {
       emit(AuthFailure(e.toString()));
     }
