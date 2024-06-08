@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fresh_check/custom_scaffold.dart';
+import 'package:fresh_check/presentation/widgets/custom_scaffold.dart';
 import 'package:fresh_check/data/repositories/product_repository_impl.dart';
 import 'package:fresh_check/domain/usecases/get_product_inventory_by_barcode_usecase.dart';
 import 'package:fresh_check/fresh_check_screen.dart';

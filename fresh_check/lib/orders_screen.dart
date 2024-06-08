@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'custom_scaffold.dart';
+import 'presentation/widgets/custom_scaffold.dart';
 
 class OrdersScreen extends StatelessWidget {
   @override

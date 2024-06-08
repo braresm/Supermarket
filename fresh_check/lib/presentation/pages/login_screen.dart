@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fresh_check/home_screen.dart';
+import 'package:fresh_check/presentation/pages/home_screen.dart';
 import 'package:fresh_check/presentation/bloc/auth/auth_bloc.dart';
 import 'package:fresh_check/presentation/bloc/auth/auth_event.dart';
 import 'package:fresh_check/presentation/bloc/auth/auth_state.dart';

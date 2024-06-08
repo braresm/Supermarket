@@ -3,8 +3,8 @@ import 'package:fresh_check/presentation/bloc/auth/auth_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fresh_check/presentation/bloc/auth/auth_event.dart';
 
-import '../../home_screen.dart';
-import '../../barcode_scanning.dart';
+import '../pages/home_screen.dart';
+import '../pages/barcode_scanning.dart';
 import '../pages/inventory_check_screen.dart';
 import '../../orders_screen.dart';
 
