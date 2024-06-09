@@ -56,6 +56,7 @@ class LoginForm extends StatefulWidget {
 
 class _LoginFormState extends State<LoginForm> {
   final _formKey = GlobalKey<FormState>();
+  final _fullNameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
@@ -67,6 +68,17 @@ class _LoginFormState extends State<LoginForm> {
         key: _formKey,
         child: Column(
           children: [
+            if (!widget.isLogin)
+              TextFormField(
+                controller: _fullNameController,
+                decoration: const InputDecoration(labelText: 'Full Name'),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter your full name';
+                  }
+                  return null;
+                },
+              ),
             TextFormField(
               controller: _emailController,
               decoration: const InputDecoration(labelText: 'Email'),
@@ -115,6 +127,7 @@ class _LoginFormState extends State<LoginForm> {
                               SignUpEvent(
                                 _emailController.text,
                                 _passwordController.text,
+                                _fullNameController.text,
                               ),
                             )
                       }

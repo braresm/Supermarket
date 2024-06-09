@@ -5,7 +5,8 @@ class AuthRepository {
     throw UnimplementedError();
   }
 
-  Future<Account?> signUp(String email, String password) async {
+  Future<Account?> signUp(
+      String email, String password, String fullname) async {
     throw UnimplementedError();
   }
 
