@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:barcode_scan2/barcode_scan2.dart';
 
 import 'package:fresh_check/domain/models/product_inventory.dart';
 import 'package:fresh_check/presentation/bloc/product_inventory/product_inventory_bloc.dart';
@@ -11,6 +12,34 @@ class CountingScreen extends StatelessWidget {
   final TextEditingController _barcodeController = TextEditingController();
 
   CountingScreen({super.key});
+
+  Future<void> _scanBarcode(BuildContext context) async {
+    try {
+      var result = await BarcodeScanner.scan();
+      if (result.type == ResultType.Barcode) {
+        _barcodeController.text = result.rawContent;
+        // Automatically trigger the search event
+        _triggerSearch(context);
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to scan barcode: $e')),
+      );
+    }
+  }
+
+  void _triggerSearch(BuildContext context) {
+    if (_formKey.currentState!.validate()) {
+      // Trigger the event to get the product by barcode
+      context.read<ProductInventoryBloc>().add(
+        GetProductInventoryByBarcodeEvent(
+          int.parse(_barcodeController.text),
+        ),
+      );
+      // Clear the form
+      _formKey.currentState!.reset();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -73,54 +102,37 @@ class CountingScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 20),
-              TextFormField(
-                controller: _barcodeController,
-                decoration: InputDecoration(
-                  labelText: 'Number of the product:',
-                  filled: true,
-                  fillColor: const Color(0xFFAED3A4),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15),
-                    borderSide: BorderSide.none,
+              Row(
+                children: [
+                  Expanded(
+                    child: TextFormField(
+                      controller: _barcodeController,
+                      decoration: InputDecoration(
+                        labelText: 'Number of the product:',
+                        filled: true,
+                        fillColor: const Color(0xFFAED3A4),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15),
+                          borderSide: BorderSide.none,
+                        ),
+                        prefixIcon: const Icon(Icons.qr_code, color: Colors.white),
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter the product number';
+                        }
+                        if (int.tryParse(value) == null) {
+                          return 'Please enter a valid number';
+                        }
+                        return null;
+                      },
+                    ),
                   ),
-                  prefixIcon: const Icon(Icons.qr_code, color: Colors.white),
-                ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter the product number';
-                  }
-                  if (int.tryParse(value) == null) {
-                    return 'Please enter a valid number';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(height: 20),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF6F8F72),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15),
+                  IconButton(
+                    icon: Icon(Icons.camera_alt),
+                    onPressed: () => _scanBarcode(context),
                   ),
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
-                ),
-                onPressed: () {
-                  if (_formKey.currentState!.validate()) {
-                    // Trigger the event to get the product by barcode
-                    context.read<ProductInventoryBloc>().add(
-                          GetProductInventoryByBarcodeEvent(
-                            int.parse(_barcodeController.text),
-                          ),
-                        );
-                    // Clear the form
-                    _formKey.currentState!.reset();
-                  }
-                },
-                child: const Text(
-                  'Search',
-                  style: TextStyle(color: Colors.white, fontSize: 18),
-                ),
+                ],
               ),
             ],
           ),

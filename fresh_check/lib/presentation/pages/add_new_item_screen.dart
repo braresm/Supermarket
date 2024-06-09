@@ -3,6 +3,7 @@ import 'package:fresh_check/domain/models/inventory.dart';
 import 'package:fresh_check/domain/models/product.dart';
 import 'package:fresh_check/presentation/bloc/product_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:barcode_scan2/barcode_scan2.dart';
 
 class AddNewItemScreen extends StatelessWidget {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -22,6 +23,19 @@ class AddNewItemScreen extends StatelessWidget {
     _barcodeController.clear();
     _amountController.clear();
     _currencyController.clear();
+  }
+
+  Future<void> _scanBarcode(BuildContext context) async {
+    try {
+      var result = await BarcodeScanner.scan();
+      if (result.type == ResultType.Barcode) {
+        _barcodeController.text = result.rawContent;
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to scan barcode: $e')),
+      );
+    }
   }
 
   @override
@@ -113,24 +127,34 @@ class AddNewItemScreen extends StatelessWidget {
                     },
                   ),
                   const SizedBox(height: 20),
-                  TextFormField(
-                    controller: _barcodeController,
-                    decoration: InputDecoration(
-                      labelText: 'Number of the product:',
-                      filled: true,
-                      fillColor: const Color(0xFFAED3A4),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(15),
-                        borderSide: BorderSide.none,
+                  Row(
+                    children: [
+                      Expanded(
+                        child: TextFormField(
+                          controller: _barcodeController,
+                          decoration: InputDecoration(
+                            labelText: 'Number of the product:',
+                            filled: true,
+                            fillColor: const Color(0xFFAED3A4),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(15),
+                              borderSide: BorderSide.none,
+                            ),
+                            prefixIcon: const Icon(Icons.qr_code),
+                          ),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter the product number';
+                            }
+                            return null;
+                          },
+                        ),
                       ),
-                      prefixIcon: const Icon(Icons.qr_code),
-                    ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter the product number';
-                      }
-                      return null;
-                    },
+                      IconButton(
+                        icon: Icon(Icons.camera_alt),
+                        onPressed: () => _scanBarcode(context),
+                      ),
+                    ],
                   ),
                   const SizedBox(height: 20),
                   TextFormField(
@@ -195,16 +219,16 @@ class AddNewItemScreen extends StatelessWidget {
                               name: _nameController.text,
                               location: _locationController.text,
                               barcode:
-                                  int.tryParse(_barcodeController.text) ?? 0,
+                              int.tryParse(_barcodeController.text) ?? 0,
                               categoty: 'test',
                               price:
-                                  double.tryParse(_currencyController.text) ??
-                                      0,
+                              double.tryParse(_currencyController.text) ??
+                                  0,
                             );
                             final inventory = Inventory(
                               productId: product.id,
                               quantity:
-                                  int.tryParse(_amountController.text) ?? 0,
+                              int.tryParse(_amountController.text) ?? 0,
                             );
 
                             context
