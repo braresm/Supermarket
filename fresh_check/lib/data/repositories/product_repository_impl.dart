@@ -66,7 +66,8 @@ class ProductRepositoryImpl implements ProductRepository {
   Future<ProductInventory?> getProductInventoryByBarcode(int barcode) async {
     final response = await Supabase.instance.client
         .from('products')
-        .select('product_name, inventory(quantity)')
+        .select(
+            'product_name, category, location, product_details, product_image, inventory(quantity, expiration_date)')
         .eq('barcode', barcode);
 
     if (response.isEmpty) {
@@ -76,6 +77,11 @@ class ProductRepositoryImpl implements ProductRepository {
     return ProductInventory(
       name: response[0]['product_name'],
       quantity: response[0]['inventory'][0]['quantity'],
+      expirationDate: response[0]['inventory'][0]['expiration_date'],
+      category: response[0]['category'],
+      location: response[0]['location'],
+      details: response[0]['product_details'],
+      imageUrl: response[0]['product_image'],
     );
   }
 }

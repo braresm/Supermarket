@@ -85,21 +85,17 @@ class BarcodeScannedScreen extends StatelessWidget {
       ),
       const SizedBox(height: 20),
       Container(
-        padding: EdgeInsets.symmetric(
-          horizontal: 16.0,
-          vertical: screenSize.height * 0.02,
-        ),
+        width: screenSize.width,
+        padding: const EdgeInsets.all(16.0),
         decoration: BoxDecoration(
           color: const Color(0xFF6F8F72),
           borderRadius: BorderRadius.circular(screenSize.width * 0.05),
         ),
-        child: TextField(
-          decoration: const InputDecoration(
-            border: InputBorder.none,
-            hintText: 'barcode number',
-            contentPadding: EdgeInsets.only(left: 16.0),
+        child: Text(
+          barcode.toString(),
+          style: TextStyle(
+            fontSize: screenSize.width * 0.05,
           ),
-          controller: TextEditingController(text: barcode.toString()),
         ),
       ),
       const SizedBox(height: 20),
@@ -129,11 +125,120 @@ class BarcodeScannedScreen extends StatelessWidget {
       ),
       const SizedBox(height: 20),
       Container(
+        padding: const EdgeInsets.all(16.0),
+        decoration: BoxDecoration(
+          color: const Color(0xFF5F705F),
+          borderRadius: BorderRadius.circular(screenSize.width * 0.05),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              'Expiration date:',
+              style: TextStyle(
+                fontSize: screenSize.width * 0.05,
+              ),
+            ),
+            Text(
+              productInventory.expirationDate,
+              style: TextStyle(
+                fontSize: screenSize.width * 0.05,
+              ),
+            ),
+          ],
+        ),
+      ),
+      const SizedBox(height: 20),
+      Container(
+        padding: const EdgeInsets.all(16.0),
+        decoration: BoxDecoration(
+          color: const Color(0xFF5F705F),
+          borderRadius: BorderRadius.circular(screenSize.width * 0.05),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              'Category:',
+              style: TextStyle(
+                fontSize: screenSize.width * 0.05,
+              ),
+            ),
+            Text(
+              productInventory.category,
+              style: TextStyle(
+                fontSize: screenSize.width * 0.05,
+              ),
+            ),
+          ],
+        ),
+      ),
+      const SizedBox(height: 20),
+      Container(
+        padding: const EdgeInsets.all(16.0),
+        decoration: BoxDecoration(
+          color: const Color(0xFF5F705F),
+          borderRadius: BorderRadius.circular(screenSize.width * 0.05),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              'Location:',
+              style: TextStyle(
+                fontSize: screenSize.width * 0.05,
+              ),
+            ),
+            Text(
+              productInventory.location,
+              style: TextStyle(
+                fontSize: screenSize.width * 0.05,
+              ),
+            ),
+          ],
+        ),
+      ),
+      const SizedBox(height: 20),
+      Container(
+        padding: const EdgeInsets.all(16.0),
+        decoration: BoxDecoration(
+          color: const Color(0xFF5F705F),
+          borderRadius: BorderRadius.circular(screenSize.width * 0.05),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              'Details:',
+              style: TextStyle(
+                fontSize: screenSize.width * 0.05,
+              ),
+            ),
+            Text(
+              productInventory.details ?? 'No details available',
+              style: TextStyle(
+                fontSize: screenSize.width * 0.05,
+              ),
+            ),
+          ],
+        ),
+      ),
+      const SizedBox(height: 20),
+      Container(
         height: screenSize.height * 0.3,
         decoration: BoxDecoration(
           color: const Color(0xFFD3D3D3),
           borderRadius: BorderRadius.circular(screenSize.width * 0.05),
         ),
+        child: productInventory.imageUrl != null &&
+                productInventory.imageUrl!.isNotEmpty
+            ? Image.network(
+                productInventory.imageUrl!,
+                fit: BoxFit.cover,
+              )
+            : const Center(
+                child: Text('No image available'),
+              ),
       )
     ];
   }
