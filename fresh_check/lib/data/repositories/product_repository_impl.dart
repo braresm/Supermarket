@@ -28,6 +28,8 @@ class ProductRepositoryImpl implements ProductRepository {
       price: result['price'],
       barcode: result['barcode'],
       location: result['location'],
+      details: result['product_details'],
+      imageUrl: result['product_image'],
     );
   }
 
@@ -37,6 +39,8 @@ class ProductRepositoryImpl implements ProductRepository {
     final response = await Supabase.instance.client.from('products').insert({
       'product_name': product.name,
       'location': product.location,
+      'product_details': product.details,
+      'product_image': product.imageUrl,
       'barcode': product.barcode,
       'category': product.categoty,
       'price': product.price,

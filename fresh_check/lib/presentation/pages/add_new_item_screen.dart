@@ -1,15 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:fresh_check/domain/models/inventory.dart';
 import 'package:fresh_check/domain/models/product.dart';
-import 'package:fresh_check/presentation/bloc/product_bloc.dart';
+import 'package:fresh_check/presentation/bloc/product/product_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:barcode_scan2/barcode_scan2.dart';
+import 'package:fresh_check/presentation/bloc/product/product_event.dart';
+import 'package:fresh_check/presentation/bloc/product/product_state.dart';
 
 class AddNewItemScreen extends StatelessWidget {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _locationController = TextEditingController();
+  final TextEditingController _categoryController = TextEditingController();
+  final TextEditingController _detailsController = TextEditingController();
+  final TextEditingController _imageUrlController = TextEditingController();
   final TextEditingController _barcodeController = TextEditingController();
   final TextEditingController _amountController = TextEditingController();
   final TextEditingController _currencyController = TextEditingController();
@@ -127,6 +132,50 @@ class AddNewItemScreen extends StatelessWidget {
                     },
                   ),
                   const SizedBox(height: 20),
+                  TextFormField(
+                    controller: _categoryController,
+                    decoration: InputDecoration(
+                      labelText: 'Category:',
+                      filled: true,
+                      fillColor: const Color(0xFFAED3A4),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15),
+                        borderSide: BorderSide.none,
+                      ),
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter a category';
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: 20),
+                  TextFormField(
+                      controller: _detailsController,
+                      decoration: InputDecoration(
+                        labelText: 'Details:',
+                        filled: true,
+                        fillColor: const Color(0xFFAED3A4),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15),
+                          borderSide: BorderSide.none,
+                        ),
+                      )),
+                  const SizedBox(height: 20),
+                  TextFormField(
+                    controller: _imageUrlController,
+                    decoration: InputDecoration(
+                      labelText: 'Image URL:',
+                      filled: true,
+                      fillColor: const Color(0xFFAED3A4),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15),
+                        borderSide: BorderSide.none,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 20),
                   Row(
                     children: [
                       Expanded(
@@ -219,16 +268,18 @@ class AddNewItemScreen extends StatelessWidget {
                               name: _nameController.text,
                               location: _locationController.text,
                               barcode:
-                              int.tryParse(_barcodeController.text) ?? 0,
-                              categoty: 'test',
+                                  int.tryParse(_barcodeController.text) ?? 0,
+                              categoty: _categoryController.text,
+                              details: _detailsController.text,
+                              imageUrl: _imageUrlController.text,
                               price:
-                              double.tryParse(_currencyController.text) ??
-                                  0,
+                                  double.tryParse(_currencyController.text) ??
+                                      0,
                             );
                             final inventory = Inventory(
                               productId: product.id,
                               quantity:
-                              int.tryParse(_amountController.text) ?? 0,
+                                  int.tryParse(_amountController.text) ?? 0,
                             );
 
                             context

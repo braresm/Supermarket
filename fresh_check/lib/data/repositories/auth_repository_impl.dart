@@ -22,10 +22,12 @@ class AuthRepositoryImpl implements AuthRepository {
         .eq('email', user.email!)
         .single();
 
+    print(accountResponse);
+
     return Account(
       id: response.user!.id,
       email: response.user!.email,
-      fullname: accountResponse['fullname'],
+      fullname: accountResponse['full_name'],
     );
   }
 
