@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fresh_check/get_started_screen.dart';
 import 'package:fresh_check/presentation/bloc/auth/auth_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fresh_check/presentation/bloc/auth/auth_event.dart';
@@ -7,6 +8,7 @@ import '../pages/home_screen.dart';
 import '../pages/barcode_scanning.dart';
 import '../pages/inventory_check_screen.dart';
 import '../../orders_screen.dart';
+import '../../assistant_screen.dart';
 
 class CustomDropdownMenu extends StatelessWidget {
   final String employeeName;
@@ -57,11 +59,23 @@ class CustomDropdownMenu extends StatelessWidget {
             'Orders',
             OrdersScreen(),
           ),
+          _buildMenuItem(
+            context,
+            Icons.question_answer,
+            'Assistant',
+            AssistantScreen(
+              employeeName: employeeName,
+            ),
+          ),
           const SizedBox(height: 20),
           ElevatedButton(
             onPressed: () {
               BlocProvider.of<AuthBloc>(context).add(LogoutEvent());
-              Navigator.of(context).popUntil((route) => route.isFirst);
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const GetStartedScreen()),
+              );
             },
             style: ElevatedButton.styleFrom(
               foregroundColor: Colors.black,

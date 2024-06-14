@@ -7,6 +7,7 @@ import 'package:fresh_check/domain/usecases/add_product_usecase.dart';
 import 'package:fresh_check/domain/usecases/auth_usecase.dart';
 import 'package:fresh_check/domain/usecases/get_product_by_barcode_usecase.dart';
 import 'package:fresh_check/presentation/bloc/auth/auth_bloc.dart';
+import 'package:fresh_check/presentation/bloc/auth/auth_event.dart';
 import 'package:fresh_check/presentation/bloc/product/product_bloc.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'welcome_screen.dart';
