@@ -26,10 +26,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     final email = prefs.getString('email');
     final password = prefs.getString('password');
 
-    print('_onAppStarted');
-    print(email);
-    print(password);
-
     if (email != null && password != null) {
       try {
         final account = await signInUseCase(email, password);

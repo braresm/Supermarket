@@ -3,12 +3,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:fresh_check/data/repositories/auth_repository_impl.dart';
 import 'package:fresh_check/data/repositories/product_repository_impl.dart';
+import 'package:fresh_check/data/repositories/task_repository_impl.dart';
 import 'package:fresh_check/domain/usecases/add_product_usecase.dart';
 import 'package:fresh_check/domain/usecases/auth_usecase.dart';
+import 'package:fresh_check/domain/usecases/complete_task.dart';
 import 'package:fresh_check/domain/usecases/get_product_by_barcode_usecase.dart';
+import 'package:fresh_check/domain/usecases/list_account_tasks.dart';
 import 'package:fresh_check/presentation/bloc/auth/auth_bloc.dart';
-import 'package:fresh_check/presentation/bloc/auth/auth_event.dart';
 import 'package:fresh_check/presentation/bloc/product/product_bloc.dart';
+import 'package:fresh_check/presentation/bloc/task/task_bloc.dart';
+import 'package:fresh_check/presentation/bloc/task_list/task_list_bloc.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'welcome_screen.dart';
 
@@ -48,6 +52,20 @@ class FreshCheckApp extends StatelessWidget {
             ),
             addProductUseCase: AddProductUseCase(
               ProductRepositoryImpl(),
+            ),
+          ),
+        ),
+        BlocProvider<TaskListBloc>(
+          create: (BuildContext context) => TaskListBloc(
+            listAccountTasksUseCase: ListAccountTasksUseCase(
+              TaskRepositoryImpl(),
+            ),
+          ),
+        ),
+        BlocProvider<TaskBloc>(
+          create: (BuildContext context) => TaskBloc(
+            completeTaskUseCase: CompleteTaskUseCase(
+              TaskRepositoryImpl(),
             ),
           ),
         )

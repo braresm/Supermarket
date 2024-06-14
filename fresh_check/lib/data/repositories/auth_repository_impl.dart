@@ -22,11 +22,9 @@ class AuthRepositoryImpl implements AuthRepository {
         .eq('email', user.email!)
         .single();
 
-    print(accountResponse);
-
     return Account(
-      id: response.user!.id,
-      email: response.user!.email,
+      id: accountResponse['id'],
+      email: accountResponse['email'],
       fullname: accountResponse['full_name'],
     );
   }
@@ -40,16 +38,17 @@ class AuthRepositoryImpl implements AuthRepository {
     String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
 
     // Insert the user details to the users table
-    await Supabase.instance.client.from('users').insert({
-      'username': response.user!.email,
+    final accountResponse =
+        await Supabase.instance.client.from('users').insert({
+      'username': email,
       'full_name': fullname,
       'role': 'manager',
-      'email': response.user!.email,
+      'email': email,
       'password_hash': hashedPassword,
     });
 
     return Account(
-      id: response.user!.id,
+      id: accountResponse['id'],
       email: response.user!.email,
       fullname: fullname,
     );
